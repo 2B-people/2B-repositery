@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "c_平时练习"
+		},
+		{
+			"path": "py_平时练习"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"math.h": "c",
+			"stdio.h": "c",
+			"vector": "c",
+			"xstring": "c",
+			"xutility": "c"
+		}
+	}
+}

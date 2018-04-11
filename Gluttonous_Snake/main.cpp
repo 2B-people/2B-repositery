@@ -3,7 +3,6 @@
   @date:2017.11.12
   @brief
   */
-
 #include<stdio.h>
 #include<time.h>
 #include<windows.h>

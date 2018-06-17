@@ -39,3 +39,16 @@ class Solution:
             else:
                 i += 1
         return len(nums)
+
+
+#最快60ms
+class Solution:
+    def removeDuplicates(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        nums[:] = sorted(list(set(nums)))
+        return len(set(nums))
+
+#set()创建一个无序不重复元素集

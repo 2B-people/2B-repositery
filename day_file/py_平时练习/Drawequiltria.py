@@ -9,3 +9,4 @@ turtle.seth(90+30)
 turtle.fd(300)
 turtle.seth(180+60)
 turtle.fd(300)
+

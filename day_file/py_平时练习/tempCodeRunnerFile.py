@@ -1,0 +1,1 @@
+    print("{}{}".format(diet[x],diet[y]))

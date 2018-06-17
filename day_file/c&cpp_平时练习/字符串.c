@@ -14,27 +14,7 @@ int num_char(char *str, char del_char)
 }
 
 //(8)
-void fun(char *str)
-{
-	char *q = str;
-	char *flag_jud = str + 1;
 
-	while (*str != '\0')
-	{
-		if (*str == '*' && *flag_jud != '*')
-			break;
-		str++;
-		flag_jud++;
-	}
-	q = flag_jud;
-	while (*str != '\0')
-	{
-		if (*str != '*')
-			*q++ = *str;
-		str++;
-	}
-	*q = *str;
-}
 
 //(9)
 
@@ -62,8 +42,29 @@ void find_max(char *str)
 
 #include <stdio.h>
 #include <string.h>
+int map[100];
 
-int map[100] = { 0 };
+void fun(char *str)
+{
+	char *q = str;
+	char *flag_jud = str + 1;
+
+	while (*str != '\0')
+	{
+		if (*str == '*' && *flag_jud != '*')
+			break;
+		str++;
+		flag_jud++;
+	}
+	q = flag_jud;
+	while (*str != '\0')
+	{
+		if (*str != '*')
+			*q++ = *str;
+		str++;
+	}
+	*q = *str;
+}
 
 
 
@@ -73,10 +74,8 @@ int main()
 	puts("please input char:");
 	scanf("%s", s);
 	getchar();
-	find_max(s);
-	printf("num = %d ", map[0]);
-	for (i = 1; *(map+i) != -1; i++)
-		printf("%d ", map[i]);
+	fun(s);
+	printf("%s",s);
 	getchar();
 	return 0;
 }

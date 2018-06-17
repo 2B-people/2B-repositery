@@ -5,8 +5,8 @@ def dfs(graph,node_start,max_step=10):
     res_graph=nx.DiGraph()  
     cur_step=0  
     stack_list=[]  
-    visited={}  
-    print node_start  
+    visited={} 
+    print (node_start)  
     visited[node_start]='1'  
     stack_list.append(node_start)  
     while len(stack_list)>0:  

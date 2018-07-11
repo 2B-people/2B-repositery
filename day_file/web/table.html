@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>table_text</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src="main.js"></script>
+</head>
+
+<body>
+    <p>每个表格由table标签开始。
+        <br/>每个表格行由tr开始
+        <br/>每个表格数据由td开始
+    </p>
+    <!-- 1 -->
+    <h4>一行三列</h4>
+    <table border="1">
+        <tr>
+            <th>sb1</th>
+            <th>sb2</th>
+            <th>sb3</th>
+        </tr>
+        <tr>
+            <td>100</td>
+            <td>200</td>
+            <td>300</td>
+        </tr>
+    </table>
+    <!-- 2 -->
+    <h4>3次3列</h4>
+    <table border="20">
+        <caption>我的标题</caption>
+        <tr>
+            <td>100</td>
+            <td>200</td>
+            <td>300</td>
+        </tr>
+        <tr>
+            <td>400</td>
+            <td>500</td>
+            <td>600</td>
+        </tr>
+        <tr>
+            <td>600</td>
+            <td>800</td>
+            <td>900</td>
+        </tr>
+    </table>
+    <!-- 3 -->
+    <hr/>
+    <h3>横跨两行的单元格</h3>
+    <table border="2">
+        <tr>
+            <th>姓名</th>
+            <td>Bill Gates</td>
+        </tr>
+        <tr>
+            <th rowspan="2">电话</th>
+            <td>555 77 854</td>
+        </tr>
+        <tr>
+            <td>555 77 855</td>
+        </tr>
+    </table>
+    <!-- 4 -->
+    <hr/>
+    <h4>横跨两列的单元格</h4>
+    <table border="1">
+        <tr>
+            <th>名字</th>
+            <th colspan="2">电话</th>
+        </tr>
+        <tr>
+            <td>Bill Gates</td>
+            <td>555 77 854</td>
+            <td>555 77 855</td>
+        </tr>
+    </table>
+</body>
+
+</html>

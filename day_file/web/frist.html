@@ -1,4 +1,3 @@
-
 <html>
 <!-- this is first html -->
 
@@ -47,9 +46,12 @@
         </style>
     </head>
     <a href="http://www.w3school.com.cn/">Visit W3School</a>
-    <p>
-        
-    </p>
+    <script type="text/javascript">
+        var c = document.getElementById("myCanvas");
+        var cxt = c.getContext("2d");
+        cxt.fillStyle = "#FF0000";
+        cxt.fillRect(0, 0, 150, 75);
+    </script>
 </body>
 
 </html>

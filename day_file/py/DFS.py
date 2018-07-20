@@ -24,7 +24,7 @@ def dfs(graph,node_start,max_step=10):
                 for i in next_nodes:  
                     res_graph.add_edge(cur_node,i)  
                     if i not in visited:  
-                        print i  
+                        print (i)  
                         visited[i]='1'  
                         stack_list.append(i)  
                         cur_step=cur_step+1  

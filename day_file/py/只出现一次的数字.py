@@ -8,6 +8,7 @@
 '''
 
 class Solution:
+
     #me 144ms
     '''
     算法：先将数组排序，排序之后遍历数组，数组中的一个数不同于他的前一位和后一位，这个数就是要找的那个数
@@ -29,6 +30,7 @@ class Solution:
                 return nums[i]
             elif nums[i-1] != nums[i] and nums[i] != nums[i+1]:
                 return nums[i]
+
     #56ms
     '''
     算法：利用python的in运算符，判断元素是否在数组中，并且把元素作为下标，记录元素个数，最后输出个数为1的
@@ -50,12 +52,13 @@ class Solution:
         for j in d:
             if d[j]==1:
                 return j
+
+    #变态方法
     '''
     算法：set返回一个无重复项的数组，求和乘二，减去原数组，得到的就是单独元素。
     可行性：除了某个元素只出现一次以外，其余"每个元素均出现两次"。
     缺点：
     '''
-    #变态方法
     def singleNumber3(self, nums):
         """
         :type nums: List[int]

@@ -9,7 +9,7 @@ class Solution:
         :rtype: int
         """
         #算股市变化表
-        NEW[]
+        NEW = []
         for i in range(len(prices)-1):
             NEW.append(price[i+1]-price[i])
         #子数组最大和
@@ -20,11 +20,8 @@ class Solution:
                 temp += i
             else:
                 temp = 0
-            imax = max(temp,imax)
-        
+            imax = max(temp,imax)        
         return imax
-
-
 '''
 题目：
 用一个数组表示股票每天的价格，数组的第i个数表示股票在第i天的价格。

@@ -11,6 +11,13 @@
 
 class Solution:
     #56ms,mine
+    '''
+    算法： 首先将数组变成一个int的变量sum，利用每项乘于对应位数10^i,
+           对sum+1，
+           之后创建一个新的数组，对sum%得到sum的最后一位，在对sum//10，
+           将取出的位放在数组里，
+           最后将数组反转
+    '''
     def plusOne1(self, digits):
         """
         :type digits: List[int]
@@ -22,7 +29,7 @@ class Solution:
             sum = sum + data*(10**(len(digits)-i))
             i = i+1
         sum = int(sum + 1)
-        # print(sum)
+        print(sum)
 
         list = []
 
@@ -34,6 +41,10 @@ class Solution:
         #print(list)
         return list
     # 36ms
+    '''
+    算法： 末尾是否为9分类，不为9，直接在最后一位上+1就ok了，
+           为9时，先将数组转换为字符串，在每位放在数组里
+    '''
     def plusOne2(self, digits):
         """
         :type digits: List[int]
@@ -46,13 +57,16 @@ class Solution:
         else:
             num=0
             digits.reverse()
+            print(digit)
             for i in range(len(digits)):
                 num=num+digits[i]*(10**(i))
             num=str(num+1)
+            print(num)
             for j in num:
                 result.append(int(j))
         return result
     
-
+# digit = [1,2,3,4,3,1,6,5,4,7,8,9,4,2,4,6]
+digit = [1,2,3,9]
 sol = Solution()
-print(sol.plusOne1([1,2,3,4,3,1,6,5,4,7,8,9,4,2,4,6]))
+data = sol.plusOne2(digit)

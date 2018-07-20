@@ -15,23 +15,24 @@
 你不需要考虑数组中超出新长度后面的元素。
 '''
 
-# me 
-'''
-算法：python一大强大之处，对列表操作可以单独删除其中元素，不必考虑是否会空
-    给定的数组是排序数组；
-    循环数组，找到下一个元素A[i+1]等于A[i]，就删除A[i+1]，
-    注意的是循环次数需要 -1，避免索引超限。
- 
-    允许重复一次，则直接检查元素A[i+2]是否等于A[i]即可，
-    因为如果A[i+2]等于A[i]，那么A[i+1]也等于A[i]，
-    此时删除A[i+2]即可。
-    当然，循环次数需要 -2
-'''
 class Solution:
     """
     @param A: a list of integers
     @return an integer
     """
+    
+    # me 
+    '''
+    算法：python一大强大之处，对列表操作可以单独删除其中元素，不必考虑是否会空
+        给定的数组是排序数组；
+        循环数组，找到下一个元素A[i+1]等于A[i]，就删除A[i+1]，
+        注意的是循环次数需要 -1，避免索引超限。
+    
+        允许重复一次，则直接检查元素A[i+2]是否等于A[i]即可，
+        因为如果A[i+2]等于A[i]，那么A[i+1]也等于A[i]，
+        此时删除A[i+2]即可。
+        当然，循环次数需要 -2
+    '''
     def removeDuplicates1(self, nums):
         """
         :type nums: List[int]
@@ -57,14 +58,11 @@ class Solution:
             else:
                 i += 1
         return len(nums)
-
-
-#最快60ms
-'''
-算法：set()创建一个无序不重复元素集，及删除重复项，再排序返回给原数组；
-'''
-class Solution:
-    def removeDuplicates(self, nums):
+    #最快60ms
+    '''
+    算法：set()创建一个无序不重复元素集，及删除重复项，再排序返回给原数组；
+    '''
+    def removeDuplicates3(self, nums):
         """
         :type nums: List[int]
         :rtype: int

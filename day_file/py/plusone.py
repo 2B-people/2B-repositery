@@ -9,8 +9,9 @@
 解释: 输入数组表示数字 123。
 '''
 
+
 class Solution:
-    #56ms,mine
+    # 56ms,mine
     '''
     算法： 首先将数组变成一个int的变量sum，利用每项乘于对应位数10^i,
            对sum+1，
@@ -18,6 +19,7 @@ class Solution:
            将取出的位放在数组里，
            最后将数组反转
     '''
+
     def plusOne1(self, digits):
         """
         :type digits: List[int]
@@ -38,7 +40,7 @@ class Solution:
             sum = sum // 10
 
         list.reverse()
-        #print(list)
+        # print(list)
         return list
     # 36ms
     '''

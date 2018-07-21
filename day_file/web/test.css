@@ -1,0 +1,24 @@
+bady {
+    background-color: red;
+}
+
+h1 {
+    font-size: 36pt;
+}
+
+h2 {
+    color: black
+}
+
+p {
+    margin-left: 50px;
+}
+
+#para1 {
+    text-align: center;
+    color: azure
+}
+
+p.center {
+    text-align: center;
+}

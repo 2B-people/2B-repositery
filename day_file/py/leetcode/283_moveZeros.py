@@ -29,8 +29,8 @@ class Solution:
             curindox -= 1
 
     #60ms
+    # TODO add 算法记录
     '''
-    TODO add 算法记录
     算法：
     '''
     def moveZeroes2(self, nums):

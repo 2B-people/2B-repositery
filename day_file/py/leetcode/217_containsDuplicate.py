@@ -12,10 +12,8 @@
 输出: true
 """
 
-class Solution:
-    '''
-    TODO add算法描述
-    '''
+class Solution:   
+    # TODO add算法描述
     def containsDuplicate(self,nums):
         """
         :type nums: List[int]

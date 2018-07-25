@@ -6,9 +6,9 @@
 你可以完成尽可能多的交易(多次买卖股票)。
 然而,你不能同时参与多个交易(你必须在再次购买前出售股票)
 '''
-'''
-TODO add 算法描述
-'''
+
+# TODO add 股票交易2解决方案
+
 class Solution:
     def maxProfit(self, prices):
         """

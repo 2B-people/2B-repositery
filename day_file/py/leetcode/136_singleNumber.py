@@ -6,6 +6,7 @@
 输入: [2,2,1]
 输出: 1
 '''
+import numpy as np
 
 class Solution:
 

@@ -4,7 +4,7 @@
 
 import csv
 import numpy as np
-
+from coding_analyze import Timer
 def loadCSVfile1():
     with open("ocean.csv", "r", encoding = "utf-8") as f:
         reader = csv.reader(f)
@@ -23,6 +23,6 @@ def loadCSVfile2():
     tmp = np.loadtxt("ocean.csv",dtype=np.str,delimiter=",")
     data = tmp[1:,0:].astype(np.int)
     return data
-
-mat = loadCSVfile2()
-print(mat)
+with Timer() as t:
+    mat = loadCSVfile2()
+    print(mat)

@@ -35,6 +35,7 @@
 ]
 '''
 # TODO 翻转矩阵解决方案
+from coding_analyze import Timer
 
 class Solution:
     # 72ms，mine
@@ -79,16 +80,17 @@ class Solution:
                 swap(n-j-1, i, n-i-1, n-j-1)
 
 if __name__== '__main__':
-    sol = Solution()
-    matrix = [
-    [ 5, 1, 9,11],
-    [ 2, 4, 8,10],
-    [13, 3, 6, 7],
-    [15,14,12,16]
-    ]
-    for i in range(len(matrix)):
-        print(matrix[i])
-    print('than:')
-    sol.rotate(matrix)
-    for i in range(len(matrix)):
-        print(matrix[i])
+    with Timer() as t:   
+        sol = Solution()
+        matrix = [
+        [ 5, 1, 9,11],
+        [ 2, 4, 8,10],
+        [13, 3, 6, 7],
+        [15,14,12,16]
+        ]
+        for i in range(len(matrix)):
+            print(matrix[i])
+        print('than:')
+        sol.rotate(matrix)
+        for i in range(len(matrix)):
+            print(matrix[i])

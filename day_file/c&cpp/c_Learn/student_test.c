@@ -235,11 +235,11 @@ void DeleteStudent(char ***students, int ***marks)
     for(len=1;students1[len] != NULL;len++);
     len = len-1;
     students1[i] = students1[len];
-    students1[len] = NULL;
     students1 = (char **)realloc((void *)students1, (len) * sizeof(char *));
+    students1[len] = NULL;
     marks1[i] = marks1[len];
-    marks1[len] = NULL;
     marks1 = (int **)realloc((void *)marks1, sizeof(int *) * (len));
+    marks1[len] = NULL;
 
     SortClass(students1, marks1);
   }

@@ -8,5 +8,6 @@ int main()
             for (ji = 0; ji <= 100; ji++)
                 if (9 * jui + tu + ji == 100 && 2 * jui + 2 * ji + 4 * tu)
                     printf("%d %d %d", jui, ji, tu);
+    getchar();
     return 0;
 }

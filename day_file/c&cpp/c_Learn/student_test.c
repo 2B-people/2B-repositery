@@ -6,6 +6,8 @@ void DeleteStudent(char ***students, int ***marks);
 void SortClass(char **students, int **marks);
 void ShowClass(char **students, int **marks);
 void EditMarks(char **students, int **marks);
+void outputtxt(char **students, int **marks);
+void readtxt(char ***students, int ***marks);
 char *ReadLine();
 #define merror(a)                              \
   {                                            \
@@ -22,6 +24,8 @@ int main()
   int **marks = NULL;
   char line[100];
   int menu;
+
+  readtxt(&students, &marks);
 
   while (1)
   {
@@ -54,6 +58,8 @@ int main()
     else
       break;
   } /*endwhile*/
+
+  outputtxt(students, marks);
 
   return 0;
 
@@ -121,6 +127,7 @@ void InsertStudent(char ***students, int ***marks)
 
     *students = students1;
     *marks = marks1;
+    free((void *)name);
     return;
   }
 
@@ -137,6 +144,7 @@ void InsertStudent(char ***students, int ***marks)
   if (found)
   {
     printf("student %s already in the class list\n", name);
+    free((void *)name);
     return;
   }
 
@@ -151,8 +159,6 @@ void InsertStudent(char ***students, int ***marks)
 
   students1[i + 1] = NULL;
 
-  free((void *)name);
-
   if ((marks1 = (int **)realloc((void *)marks1, sizeof(int *) * (i + 2))) == NULL)
     merror(8);
   if ((marks1[i] = (int *)malloc(5 * sizeof(int))) == NULL)
@@ -164,6 +170,8 @@ void InsertStudent(char ***students, int ***marks)
 
   *students = students1;
   *marks = marks1;
+  free((void *)name);
+  return;
 }
 
 /* function DeleteStudent
@@ -202,18 +210,14 @@ student (in main()) - when a student name is deleted. The same aplies to marks.*
 
 void DeleteStudent(char ***students, int ***marks)
 {
-  int found_flag, i, j,len;
-  char **students1;
-  int **marks1;
-  char **del_students;
-  int **del_marks;
+  int found_flag = 0, i, len;
+  char **students1 = *students;
+  int **marks1 = *marks;
   char *name;
-  students1 = *students;
-  marks1 = *marks;
 
   if (students1 == NULL)
   {
-    printf("you don't input angone in class!");
+    printf("Class List is empty!\n");
     return;
   }
 
@@ -232,16 +236,24 @@ void DeleteStudent(char ***students, int ***marks)
 
   if (found_flag)
   {
-    for(len=1;students1[len] != NULL;len++);
-    len = len-1;
+    for (len = 0; students1[len] != NULL; len++)
+      ;
+    len = len - 1;
     students1[i] = students1[len];
-    students1 = (char **)realloc((void *)students1, (len) * sizeof(char *));
+    //students1 = (char **)realloc((void *)students1, (len + 1) * sizeof(char *));
+    free((void *)students1[len + 1]);
     students1[len] = NULL;
     marks1[i] = marks1[len];
-    marks1 = (int **)realloc((void *)marks1, sizeof(int *) * (len));
+    //marks1 = (int **)realloc((void *)marks1, sizeof(int *) * (len + 1));
+    free((void *)marks1[len + 1]);
     marks1[len] = NULL;
 
     SortClass(students1, marks1);
+
+    *students = students1;
+    *marks = marks1;
+    free((void *)name);
+    return;
   }
   else
   {
@@ -249,8 +261,6 @@ void DeleteStudent(char ***students, int ***marks)
     free((void *)name);
     return;
   }
-  *students = students1;
-  *marks = marks1;
 }
 
 /* function SortClass
@@ -271,15 +281,21 @@ value stored in the pointer student. The same applies to marks.*/
 void SortClass(char **students, int **marks)
 {
   int i, j;
-  char *temp;
+  char *temp_students;
+  int *temp_marks;
+
   for (i = 0; students[i] != NULL; i++)
     for (j = i + 1; students[j] != NULL; j++)
     {
       if (strcmp(students[i], students[j]) > 0)
       {
-        temp = students[i];
+        temp_students = students[i];
         students[i] = students[j];
-        students[j] = temp;
+        students[j] = temp_students;
+
+        temp_marks = marks[i];
+        marks[i] = marks[j];
+        marks[j] = temp_marks;
       }
     }
 }
@@ -360,7 +376,7 @@ for this function does not need to modify the value stored in the pointer studen
 The same applies to marks.*/
 void EditMarks(char **students, int **marks)
 {
-  int found_flag, i, j;
+  int found_flag, i, j,flag = 0;
   char *name;
   char *number[] = {"1st", "2nd", "3rd", "4th", "5th"};
 
@@ -389,7 +405,10 @@ void EditMarks(char **students, int **marks)
     {
       printf("to leave the %s mark   unchanged, press <enter>,\n", number[j]);
       printf("otherwise type new mark and press <enter>\n");
-      scanf("%d", &marks[i][j]);
+      flag = scanf("%d", &marks[i][j]);
+      getchar();
+      if(flag == 0)
+        continue;
     }
   }
   else
@@ -418,6 +437,40 @@ char *ReadLine()
         buf[j] = '\0';
         break;
       }
+    }
+
+    if (i == 10 && buf[j] != '\0')
+    {
+      size += 10;
+      if ((buf = (char *)realloc((void *)buf, size)) == NULL)
+        merror(1);
+      continue;
+    }
+    break;
+  }
+  return buf;
+}
+
+char *F_ReadLine(FILE *fp)
+{
+  char *buf;
+  int i, j, size;
+  if ((buf = (char *)malloc(10)) == NULL)
+    merror(0);
+  size = 10;
+  j = -1;
+  while (1)
+  {
+    for (i = 0; i < 10; i++)
+    {
+      buf[++j] = fgetc(fp);
+      if (feof(fp))
+        break;
+      if (buf[j] == ':')
+      {
+        buf[j] = '\0';
+        break;
+      }
     } /*endfor*/
 
     if (i == 10 && buf[j] != '\0')
@@ -430,5 +483,149 @@ char *ReadLine()
     break;
   } /*endwhile*/
   return buf;
+}
 
-} /*end ReadLine*/
+int readnumber(FILE *fp)
+{
+  char *buf;
+  int aws;
+  int i, j, size;
+  if ((buf = (char *)malloc(10)) == NULL)
+    merror(0);
+  size = 10;
+  j = -1;
+  while (1)
+  {
+    for (i = 0; i < 10; i++)
+    {
+      buf[++j] = fgetc(fp);
+      if(feof(fp))
+        break;
+      if (buf[j] == ',')
+      {
+        buf[j] = '\0';
+        break;
+      }
+    }
+    if (i == 10 && buf[j] != '\0')
+    {
+      size += 10;
+      if ((buf = (char *)realloc((void *)buf, size)) == NULL)
+        merror(1);
+      continue;
+    }
+    break;
+  }
+  aws = atoi(buf);
+  free((void*)buf);
+  return aws;
+}
+
+void outputtxt(char **students, int **marks)
+{
+  FILE *fp;
+  int i, j;
+
+  if (students == NULL)
+  {
+    printf("Class List is empty!\n");
+    fclose(fp);
+    return;
+  }
+
+  if ((fp = fopen("student.txt", "w")) == NULL)
+    merror(13);
+
+  for (i = 0; students[i] != NULL; i++)
+  {
+    fprintf(fp, "%s: ", students[i]);
+    for (j = 0; j < 5; j++)
+    {
+      if (marks[i][j] != -1)
+        fprintf(fp, "%d", marks[i][j]);
+      else
+        fprintf(fp, " ");
+      if (j <= 3)
+        fprintf(fp, ",");
+    }
+    fprintf(fp, ",");
+  }
+  fclose(fp);
+  return;
+}
+
+void readtxt(char ***students, int ***marks)
+{
+  FILE *fp;
+  int i, k;
+  char *name;
+  int in_marks[5];
+  char **students1 = *students;
+  int **marks1 = *marks;
+
+  if ((fp = fopen("student.txt", "r")) == NULL)
+    merror(13);
+
+  for (i = 0;; i++)
+  {
+    name = F_ReadLine(fp);
+    if (feof(fp))
+      break;
+    fgetc(fp);
+    for (k = 0; k < 5; k++)
+    {
+      in_marks[k] = readnumber(fp);
+    }
+    if (students1 == NULL)
+    {
+      if ((students1 = (char **)malloc(2 * sizeof(char *))) == NULL)
+        merror(2);
+      if ((students1[0] = (char *)malloc(strlen(name) + 1)) == NULL)
+        merror(3);
+      strcpy(students1[0], name);
+
+      students1[1] = NULL;
+      if ((marks1 = (int **)malloc(2 * sizeof(int *))) == NULL)
+        merror(4);
+      if ((marks1[0] = (int *)malloc(5 * sizeof(int))) == NULL)
+        merror(5);
+      for (k = 0; k < 5; k++)
+      {
+        if (in_marks[k] == 0)
+          marks1[0][k] = -1;
+        else
+          marks1[0][k] = in_marks[k];
+      }
+      marks1[1] = NULL;
+    }
+    else
+    {
+      students1 = (char **)realloc((void *)students1, (i + 2) * sizeof(char *));
+      if (students1 == NULL)
+        merror(6);
+      if ((students1[i] = (char *)malloc(strlen(name) + 1)) == NULL)
+        merror(7);
+      strcpy(students1[i], name);
+
+      students1[i + 1] = NULL;
+
+      if ((marks1 = (int **)realloc((void *)marks1, sizeof(int *) * (i + 2))) == NULL)
+        merror(8);
+      if ((marks1[i] = (int *)malloc(5 * sizeof(int))) == NULL)
+        merror(9);
+      for (k = 0; k < 5; k++)
+      {
+        if (in_marks[k] == 0)
+          marks1[i][k] = -1;
+        else
+          marks1[i][k] = in_marks[k];
+      }
+      marks1[i + 1] = NULL;
+    }
+  }
+  *students = students1;
+  *marks = marks1;
+  free((void *)name);
+  fclose(fp);
+  return;
+}

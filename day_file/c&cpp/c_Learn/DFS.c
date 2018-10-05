@@ -29,7 +29,7 @@ void dfs(int xi, int yi, int cot);
 int main()
 {
 	int xi, yi;//开始的点
-	scanf_s("%d %d %d", &n, &m, &t);
+	scanf("%d %d %d", &n, &m, &t);
 	getchar();      //把\n读掉
 	for (int i = 1; i <= n; i++)
 	{

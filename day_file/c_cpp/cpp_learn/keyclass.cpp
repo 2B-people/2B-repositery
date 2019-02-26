@@ -25,7 +25,7 @@ int main()
     KetTest key1("1111");
     KetTest key2("2222");
     maptest.insert(pair<string,KetTest>("1",key1));
-    maptest.insert(pair<string,KetTest>("2",key2));
+    maptest.insert(pair<string,bool>("2",true));
 
     map<string,KetTest>::iterator iter;
     for(iter = maptest.begin() ;iter != maptest.end();iter++)

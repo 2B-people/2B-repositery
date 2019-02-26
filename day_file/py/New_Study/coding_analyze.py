@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding:utf-8 -*-
 import os
 import time
 import sys
@@ -5,7 +7,7 @@ import sys
 # 统计代码量
 # 使用len(t_coding)function选择统计对象
 baseroot = os.getcwd()
-whiteDict = {'py':['py'],'cpp&c':['cpp','h','c'],'web':['html','css','ts'],'matlab':['m']}
+whiteDict = {'py':['py'],'cpp&c':['cpp','h','hpp','c'],'web':['html','css','ts'],'matlab':['m']}
 FileList = []
 
 def afileline(f_path):
@@ -30,7 +32,7 @@ def len(t_coding):
         sum += afileline(file)
     print('program line sum is:',sum)    
     print('Done! Cost time is ',(time.clock()-s_time),'second')
-    FileList.clear()
+    # FileList.clear()
 
 
 # eg，Timer类，记时测量
@@ -60,3 +62,6 @@ class Timer(object):
         self.msecs = self.secs * 1000  # millisecs
         if self.verbose:
             print ('elapsed time: ',self.msecs,'ms')
+
+
+len('cpp&c')

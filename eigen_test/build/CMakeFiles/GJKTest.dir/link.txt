@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/GJKTest.dir/GJKTest.cpp.o  -o GJKTest 

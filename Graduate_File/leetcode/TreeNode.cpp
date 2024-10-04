@@ -107,4 +107,33 @@ class Solution {
     }
     return CheckMirror(root, root);
   }
+  // leetcode 112
+  bool hasPathSum(TreeNode *root, int targetSum) {
+    if (root == nullptr) return false;
+    if (root->left == nullptr && root->right == nullptr)
+      return targetSum == root->val;
+    return hasPathSum(root->left, targetSum - root->val) ||
+           hasPathSum(root->right, targetSum - root->val);
+  }
+  // leetcode 222
+  int countNodes(TreeNode *root) {
+    if (root == nullptr) return 0;
+    return 1 + countNodes(root->left) + countNodes(root->right);
+  }
+  //leetcode 108
+  TreeNode *helper(vector<int> &nums, int left, int right) {
+    if (left > right) {
+      return nullptr;
+    }
+    int mid = (right+left)/2;
+    TreeNode * cur = new TreeNode(nums[mid]);
+    cur->left = helper(nums,left,mid-1);
+    cur->right = helper(nums,mid+1,right);
+    return cur;
+    
+  }
+  TreeNode *sortedArrayToBST(vector<int> &nums) {
+    return helper(nums,0,nums.size()-1);
+  }
+
 };

@@ -88,6 +88,75 @@ class Solution {
     }
     return true;
   }
+
+  // leetcode 202.isHappy
+  vector<int> detachNum(int n) {
+    vector<int> res;
+    while (n / 10 != 0) {
+      res.push_back(n % 10);
+      n = n / 10;
+    }
+    res.push_back(n);
+    return res;
+  }
+  bool isHappy(int n) {
+    int sum = n;
+    unordered_map<int, int> hash_map;
+    while (sum != 1) {
+      vector<int> res = detachNum(sum);
+      sum = 0;
+      for (int i = 0; i < res.size(); i++) {
+        sum += res[i] * res[i];
+      }
+      if (hash_map.count(sum)) {
+        return false;
+      } else {
+        hash_map[sum]++;
+      }
+    }
+    return true;
+  }
+  // leetcode 219 重复元素2
+  bool containsNearbyDuplicate(vector<int> &nums, int k) {
+    unordered_map<int, int> hash_map;
+    for (int i = 0; i < nums.size(); i++) {
+      if (hash_map.count(nums[i]) && i - hash_map[nums[i]] <= k) {
+        return true;
+      }
+      hash_map[nums[i]] = i;
+    }
+    return false;
+  }
+  //leetcode 242
+  bool isAnagram(string s, string t) {
+    if (s.size() != t.size()) return false;
+    unordered_map<char, int> s2t;
+    for (char &c : s) {
+      s2t[c]++;
+    }
+    for (int i = 0; i < t.size(); i++) {
+      s2t[t[i]]--;
+      if (s2t[t[i]] < 0) return false;
+    }
+    return true;
+  }
+  //leetcode 49
+  vector<vector<string>> groupAnagrams(vector<string> &strs) {
+    unordered_map<string,vector<string>> m;
+    for (auto &str : strs)
+    {
+      string key = str;
+      sort(key.begin(), key.end());
+      m[key].push_back(str);
+    }
+    vector<vector<string>> res;
+    for (auto &item : m)
+    {
+      res.push_back(item.second);
+    }
+    return res;
+    
+  }
 };
 
 int main(int argc, char const *argv[]) {
@@ -95,7 +164,9 @@ int main(int argc, char const *argv[]) {
   string s1 = "dog cat cat dog";
   string pattern = "abba";
   vector<string> res;
+  int n = 2;
   cout << s.wordPattern(pattern, s1) << endl;
+  cout << s.isHappy(n) << endl;
 
   return 0;
 }

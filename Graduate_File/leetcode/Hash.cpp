@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <iostream>
 #include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
 using namespace std;
@@ -127,7 +128,7 @@ class Solution {
     }
     return false;
   }
-  //leetcode 242
+  // leetcode 242
   bool isAnagram(string s, string t) {
     if (s.size() != t.size()) return false;
     unordered_map<char, int> s2t;
@@ -140,22 +141,39 @@ class Solution {
     }
     return true;
   }
-  //leetcode 49
+  // leetcode 49
   vector<vector<string>> groupAnagrams(vector<string> &strs) {
-    unordered_map<string,vector<string>> m;
-    for (auto &str : strs)
-    {
+    unordered_map<string, vector<string>> m;
+    for (auto &str : strs) {
       string key = str;
       sort(key.begin(), key.end());
       m[key].push_back(str);
     }
     vector<vector<string>> res;
-    for (auto &item : m)
-    {
+    for (auto &item : m) {
       res.push_back(item.second);
     }
     return res;
-    
+  }
+  //leetcode 58
+  int longestConsecutive(vector<int> &nums) {
+    unordered_set<int> s;
+    int max_count = 0;
+    for (auto &num : nums) {
+      s.insert(num);
+    }
+    for (int i = 0; i < nums.size(); i++) {
+      if (!s.count(nums[i] - 1)) {
+        int count = 1;
+        int cur_num = nums[i];
+        while (s.count(cur_num + 1)) {
+          cur_num++;
+          count++;
+        }
+        max_count = max(max_count, count);
+      }
+    }
+    return max_count;
   }
 };
 

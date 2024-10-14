@@ -9,6 +9,7 @@
  * };
  */
 #include <iostream>
+#include <stack>
 #include <string>
 #include <vector>
 
@@ -107,6 +108,31 @@ class Solution {
       delete vec[0];
       return head;
     }
+  }
+  // leetcode 82 bug
+  ListNode* deleteDuplicates(ListNode* head) {
+    if (!head || !head->next) return head;
+    ListNode* hair_ptr = new ListNode(-1000, head);
+    stack<ListNode*> st;
+    ListNode* curr = hair_ptr;
+    while (curr->next) {
+      if (st.top()->val == curr->val) {
+        while (st.top()->val == curr->val) {
+          curr = curr->next;
+        }
+        st.pop();
+        if (curr->next) st.top()->next = curr->next;
+        curr = curr->next;
+
+      } else {
+        st.push(curr);
+        curr = curr->next;
+      }
+    }
+    if (st.size() == 1) return nullptr;
+    ListNode* new_head = hair_ptr->next;
+    delete hair_ptr;
+    return new_head;
   }
 };
 

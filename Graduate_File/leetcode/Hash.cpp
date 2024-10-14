@@ -90,7 +90,7 @@ class Solution {
     return true;
   }
 
-  // leetcode 202.isHappy
+  // !note leetcode 202.isHappy
   vector<int> detachNum(int n) {
     vector<int> res;
     while (n / 10 != 0) {
@@ -117,7 +117,7 @@ class Solution {
     }
     return true;
   }
-  // leetcode 219 重复元素2
+  // !note leetcode 219 重复元素2
   bool containsNearbyDuplicate(vector<int> &nums, int k) {
     unordered_map<int, int> hash_map;
     for (int i = 0; i < nums.size(); i++) {
@@ -128,7 +128,7 @@ class Solution {
     }
     return false;
   }
-  // leetcode 242
+  // !note leetcode 242
   bool isAnagram(string s, string t) {
     if (s.size() != t.size()) return false;
     unordered_map<char, int> s2t;
@@ -141,7 +141,7 @@ class Solution {
     }
     return true;
   }
-  // leetcode 49
+  // !note leetcode 49
   vector<vector<string>> groupAnagrams(vector<string> &strs) {
     unordered_map<string, vector<string>> m;
     for (auto &str : strs) {
@@ -155,7 +155,7 @@ class Solution {
     }
     return res;
   }
-  //leetcode 58
+  //!note leetcode 58
   int longestConsecutive(vector<int> &nums) {
     unordered_set<int> s;
     int max_count = 0;

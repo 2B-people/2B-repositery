@@ -107,7 +107,7 @@ class Solution {
     }
     return CheckMirror(root, root);
   }
-  // leetcode 112
+  // !note leetcode 112
   bool hasPathSum(TreeNode *root, int targetSum) {
     if (root == nullptr) return false;
     if (root->left == nullptr && root->right == nullptr)
@@ -115,12 +115,12 @@ class Solution {
     return hasPathSum(root->left, targetSum - root->val) ||
            hasPathSum(root->right, targetSum - root->val);
   }
-  // leetcode 222
+  // !note leetcode 222
   int countNodes(TreeNode *root) {
     if (root == nullptr) return 0;
     return 1 + countNodes(root->left) + countNodes(root->right);
   }
-  //leetcode 108
+  //!note leetcode 108
   TreeNode *helper(vector<int> &nums, int left, int right) {
     if (left > right) {
       return nullptr;

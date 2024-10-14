@@ -5,7 +5,7 @@ using namespace std;
 
 class Solution {
  public:
-  // leetcode 228
+  // !note leetcode 228
     vector<string> summaryRanges(vector<int>& nums) {
         vector<string> res;
         int left = 0, right = 0;

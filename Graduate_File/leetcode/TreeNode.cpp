@@ -10,11 +10,12 @@
   left_inorder(left_inorder), right_inorder(right_inorder) {}
   };
  */
+#include <algorithm>
+#include <climits>
 #include <iostream>
 #include <queue>
 #include <unordered_map>
 #include <vector>
-#include <climits>
 
 using namespace std;
 
@@ -237,18 +238,17 @@ class TreeNodeSolution {
   // !note leetcode 124
   int max_sum_;
 
-  int maxHelper(TreeNode *root)
-  {
-    if(root == nullptr) return 0;
+  int maxHelper(TreeNode *root) {
+    if (root == nullptr) return 0;
 
-    int left_max_help = max(maxHelper(root->left),0);
-    int right_max_help = max(maxHelper(root->right),0);
+    int left_max_help = max(maxHelper(root->left), 0);
+    int right_max_help = max(maxHelper(root->right), 0);
 
-    int cur_path_max = root->val +left_max_help+right_max_help;
+    int cur_path_max = root->val + left_max_help + right_max_help;
 
-    max_sum_ = max(cur_path_max,max_sum_);
+    max_sum_ = max(cur_path_max, max_sum_);
 
-    return root->val + max(left_max_help,right_max_help);
+    return root->val + max(left_max_help, right_max_help);
   }
 
   int maxPathSum(TreeNode *root) {
@@ -275,6 +275,17 @@ class Node {
       : val(_val), left(_left), right(_right), next(_next) {}
 };
 
+//  * Definition for a binary tree node.
+struct TreeNode {
+  int val;
+  TreeNode *left;
+  TreeNode *right;
+  TreeNode() : val(0), left(nullptr), right(nullptr) {}
+  TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+  TreeNode(int x, TreeNode *left, TreeNode *right)
+      : val(x), left(left), right(right) {}
+};
+
 class Solution {
  public:
   Node *connect(Node *root) {
@@ -296,5 +307,106 @@ class Solution {
       }
     }
     return root;
+  }
+  // !note leetcode 199
+  vector<int> rightSideView(TreeNode *root) {
+    // 广度优先搜索，从右边开始进行记录
+    vector<int> result;
+    if (!root) return result;  // 如果根节点为空，返回空的结果
+    queue<TreeNode *> q;       // 创建一个队列来进行层次遍历
+    q.push(root);              // 将根节点放入队列
+    while (!q.empty()) {
+      int curr_size = q.size();
+      TreeNode *f_node = q.front();
+      result.push_back(f_node->val);
+      for (int i = 0; i < curr_size; i++) {
+        TreeNode *node = q.front();
+        q.pop();
+        if (node->right) {
+          q.push(node->right);
+        }
+        if (node->left) {
+          q.push(node->left);
+        }
+      }
+    }
+    return result;
+  }
+
+  // !leecode 103
+  vector<vector<int>> zigzagLevelOrder(TreeNode *root) {
+    vector<vector<int>> res;
+    if (root == nullptr) return res;
+    queue<TreeNode *> q;
+    q.push(root);
+    int level = 0;
+    while (!q.empty()) {
+      int curr_level_size = q.size();
+      vector<int> temp;
+      for (int i = 0; i < curr_level_size; i++) {
+        auto node = q.front();
+        q.pop();
+        temp.push_back(node->val);
+        if (node->left) q.push(node->left);
+        if (node->right) q.push(node->right);
+      }
+      if (level % 2 == 0) {
+        vector<int> r_temp;
+        for (int i = temp.size() - 1; i > 0; i--) {
+          r_temp.push_back(temp[i]);
+        }
+      } else
+        res.push_back(temp);
+      level++;
+    }
+    return res;
+  }
+
+  // !leetcode 530
+
+  int min_diff = INT_MAX;
+  void dfs(TreeNode *root, int &pre) {
+    if (root == nullptr || pre == -1) return;
+    dfs(root->left, pre);
+    // 中序遍历
+    // leetcode 530
+    // if (pre == -1)
+    //   pre = root->val;
+    // else {
+    //   min_diff = min(min_diff, root->val - pre);
+    //   pre = root->val;
+    // }
+    // leetcode 230
+    if (pre == 0) return;
+    pre--;
+    if (pre == 0) {
+      k_min = root->val;
+      pre = -1;
+      return;
+    }
+    dfs(root->right, pre);
+    return;
+  }
+  int getMinimumDifference(TreeNode *root) {
+    dfs(root, -1);
+    return min_diff;
+  }
+  // !leetcode 230
+  int k_min = 0;
+  int kthSmallest(TreeNode *root, int k) {
+    dfs(root, k);
+    return k_min;
+  }
+  // !leetcode 98
+  bool isBSTToDfs(TreeNode *root, long long lower, long long upper){
+    if (root == nullptr) return true;
+    if (root->val <= lower || root->val >= upper) return false;
+    return isBSTToDfs(root->left, lower, root->val) && isBSTToDfs(root->right, root->val, upper);
+  }
+
+
+  bool isValidBST(TreeNode *root) {
+    if (root == nullptr) return true;
+    return isBSTToDfs(root, LONG_MIN, LONG_MAX);
   }
 };

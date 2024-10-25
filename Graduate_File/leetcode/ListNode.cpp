@@ -240,7 +240,7 @@ class LRUCache {
   }
 
  public:
-  LRUCache(int capacity) : capacity_(capacity) {
+  LRUCache(int capacity) : capacity_(capacity) { 
     size_ = 0;
     head_ = new DListNode(-1);
     tail_ = new DListNode(-1);

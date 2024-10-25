@@ -93,6 +93,7 @@ int main() {
       q.pop();
       currentLevel.push_back(current);
       result = max(result, dp[current]);
+      // next thing
       for (auto next : nodes[current].next) {
         dp[next] = max(dp[next], dp[current] + nodes[next].time);
         if (--nodes[next].indegree == 0) {
@@ -100,6 +101,7 @@ int main() {
         }
       }
     }
+    //update next task need time
     for (int task : currentLevel) {
       for (auto next : nodes[task].next) {
         dp[next] = max(dp[next], dp[task] + nodes[next].time);

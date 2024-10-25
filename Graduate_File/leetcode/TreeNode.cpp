@@ -2,12 +2,12 @@
   Definition for a binary tree node.
   struct TreeNode {
       int val;
-      TreeNode *left_inorder;
-      TreeNode *right_inorder;
-      TreeNode() : val(0), left_inorder(nullptr), right_inorder(nullptr) {}
-      TreeNode(int x) : val(x), left_inorder(nullptr), right_inorder(nullptr)
-  {} TreeNode(int x, TreeNode *left_inorder, TreeNode *right_inorder) : val(x),
-  left_inorder(left_inorder), right_inorder(right_inorder) {}
+      TreeNode *left;
+      TreeNode *right;
+      TreeNode() : val(0), left(nullptr), right(nullptr) {}
+      TreeNode(int x) : val(x), left(nullptr), right(nullptr)
+  {} TreeNode(int x, TreeNode *left, TreeNode *right) : val(x),
+  left(left), right(right) {}
   };
  */
 #include <algorithm>
@@ -21,12 +21,12 @@ using namespace std;
 
 struct TreeNode {
   int val;
-  TreeNode *left_inorder;
-  TreeNode *right_inorder;
-  TreeNode() : val(0), left_inorder(nullptr), right_inorder(nullptr) {}
-  TreeNode(int x) : val(x), left_inorder(nullptr), right_inorder(nullptr) {}
-  TreeNode(int x, TreeNode *left_inorder, TreeNode *right_inorder)
-      : val(x), left_inorder(left_inorder), right_inorder(right_inorder) {}
+  TreeNode *left;
+  TreeNode *right;
+  TreeNode() : val(0), left(nullptr), right(nullptr) {}
+  TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+  TreeNode(int x, TreeNode *left, TreeNode *right)
+      : val(x), left(left), right(right) {}
 };
 
 class TreeNodeSolution {
@@ -41,8 +41,8 @@ class TreeNodeSolution {
       while (cur_size--) {
         TreeNode *tmp = Q.front();
         Q.pop();
-        if (tmp->left_inorder) Q.push(tmp->left_inorder);
-        if (tmp->right_inorder) Q.push(tmp->right_inorder);
+        if (tmp->left) Q.push(tmp->left);
+        if (tmp->right) Q.push(tmp->right);
       }
       ans++;
     }
@@ -58,16 +58,16 @@ class TreeNodeSolution {
     if (p->val != q->val) {
       return false;
     }
-    return isSameTree(p->left_inorder, q->left_inorder) &&
-           isSameTree(p->right_inorder, q->right_inorder);
+    return isSameTree(p->left, q->left) &&
+           isSameTree(p->right, q->right);
   }
 
   TreeNode *invertTree(TreeNode *root_preorder) {
     if (root_preorder == nullptr) return nullptr;
-    TreeNode *left_inorder = invertTree(root_preorder->left_inorder);
-    TreeNode *right_inorder = invertTree(root_preorder->right_inorder);
-    root_preorder->left_inorder = right_inorder;
-    root_preorder->right_inorder = left_inorder;
+    TreeNode *left = invertTree(root_preorder->left);
+    TreeNode *right = invertTree(root_preorder->right);
+    root_preorder->left = right;
+    root_preorder->right = left;
     return root_preorder;
   }
 
@@ -81,8 +81,8 @@ class TreeNodeSolution {
     if (root1->val != root2->val) {
       return false;
     }
-    return CheckMirror(root1->left_inorder, root2->right_inorder) &&
-           CheckMirror(root1->right_inorder, root2->left_inorder);
+    return CheckMirror(root1->left, root2->right) &&
+           CheckMirror(root1->right, root2->left);
   }
 
   bool CheckMirror2(TreeNode *root1, TreeNode *root2) {
@@ -98,11 +98,11 @@ class TreeNodeSolution {
       if (root1 == nullptr || root2 == nullptr) return false;
       if (root1->val != root2->val) return false;
 
-      Q1.push(root1->left_inorder);
-      Q1.push(root1->right_inorder);
+      Q1.push(root1->left);
+      Q1.push(root1->right);
       //
-      Q2.push(root2->right_inorder);
-      Q2.push(root2->left_inorder);
+      Q2.push(root2->right);
+      Q2.push(root2->left);
     }
     return true;
   }
@@ -116,29 +116,29 @@ class TreeNodeSolution {
   // !note leetcode 112
   bool hasPathSum(TreeNode *root_preorder, int targetSum) {
     if (root_preorder == nullptr) return false;
-    if (root_preorder->left_inorder == nullptr &&
-        root_preorder->right_inorder == nullptr)
+    if (root_preorder->left == nullptr &&
+        root_preorder->right == nullptr)
       return targetSum == root_preorder->val;
-    return hasPathSum(root_preorder->left_inorder,
+    return hasPathSum(root_preorder->left,
                       targetSum - root_preorder->val) ||
-           hasPathSum(root_preorder->right_inorder,
+           hasPathSum(root_preorder->right,
                       targetSum - root_preorder->val);
   }
   // !note leetcode 222
   int countNodes(TreeNode *root_preorder) {
     if (root_preorder == nullptr) return 0;
-    return 1 + countNodes(root_preorder->left_inorder) +
-           countNodes(root_preorder->right_inorder);
+    return 1 + countNodes(root_preorder->left) +
+           countNodes(root_preorder->right);
   }
   //! note leetcode 108
-  TreeNode *helper(vector<int> &nums, int left_inorder, int right_inorder) {
-    if (left_inorder > right_inorder) {
+  TreeNode *helper(vector<int> &nums, int left, int right) {
+    if (left > right) {
       return nullptr;
     }
-    int mid = (right_inorder + left_inorder) / 2;
+    int mid = (right + left) / 2;
     TreeNode *cur = new TreeNode(nums[mid]);
-    cur->left_inorder = helper(nums, left_inorder, mid - 1);
-    cur->right_inorder = helper(nums, mid + 1, right_inorder);
+    cur->left = helper(nums, left, mid - 1);
+    cur->right = helper(nums, mid + 1, right);
     return cur;
   }
   TreeNode *sortedArrayToBST(vector<int> &nums) {
@@ -157,25 +157,25 @@ class TreeNodeSolution {
     preorder_ = preorder;
     return buildTreeHelper(0, 0, inorder.size() - 1);
   }
-  TreeNode *buildTreeHelper(int root_preorder, int left_inorder,
-                            int right_inorder) {
-    if (left_inorder > right_inorder) {
+  TreeNode *buildTreeHelper(int root_preorder, int left,
+                            int right) {
+    if (left > right) {
       return nullptr;
     }
     auto val = preorder_[root_preorder];
     TreeNode *new_root = new TreeNode(val);
 
     auto index_inorder = index_dir_[val];
-    // build left_inorder tree
+    // build left tree
     int next_left_root = root_preorder + 1;
-    new_root->left_inorder =
-        buildTreeHelper(next_left_root, left_inorder, index_inorder - 1);
-    // build right_inorder tree
+    new_root->left =
+        buildTreeHelper(next_left_root, left, index_inorder - 1);
+    // build right tree
     // > **TIPS：* 含义为 `左子树长度 + 根节点索引 + 1`
-    int left_tree_size = index_inorder - left_inorder;
+    int left_tree_size = index_inorder - left;
     int next_right_root = left_tree_size + root_preorder + 1;
-    new_root->right_inorder =
-        buildTreeHelper(next_right_root, index_inorder + 1, right_inorder);
+    new_root->right =
+        buildTreeHelper(next_right_root, index_inorder + 1, right);
     // return root to connect
     return new_root;
   }
@@ -194,9 +194,9 @@ class TreeNodeSolution {
     return buildTreeHelper(root_index_post, 0, inorder.size() - 1);
   }
 
-  TreeNode *buildTreeHelper(int root_postorder, int left_inorder,
-                            int right_inorder) {
-    if (left_inorder > right_inorder) {
+  TreeNode *buildTreeHelper(int root_postorder, int left,
+                            int right) {
+    if (left > right) {
       return nullptr;
     }
     auto val = postorder_[root_postorder];
@@ -204,13 +204,13 @@ class TreeNodeSolution {
     auto root_inorder = index_dir_[val];
 
     // build right tree
-    new_root->right_inorder =
-        buildTreeHelper(root_postorder - 1, root_inorder + 1, right_inorder);
+    new_root->right =
+        buildTreeHelper(root_postorder - 1, root_inorder + 1, right);
     // build left tree
-    int right_tree_size = right_inorder - root_inorder;
+    int right_tree_size = right - root_inorder;
     int new_left_root = root_postorder - right_tree_size - 1;
-    new_root->left_inorder =
-        buildTreeHelper(new_left_root, left_inorder, root_inorder - 1);
+    new_root->left =
+        buildTreeHelper(new_left_root, left, root_inorder - 1);
     return new_root;
   }
   // !note leetcode 114
@@ -220,8 +220,8 @@ class TreeNodeSolution {
 
     vc_.push_back(root);
 
-    dg(root->left_inorder);
-    dg(root->right_inorder);
+    dg(root->left);
+    dg(root->right);
   }
   void flatten(TreeNode *root) {
     //
@@ -229,8 +229,8 @@ class TreeNodeSolution {
 
     TreeNode *rt = root;
     for (int i = 1; i < vc_.size(); i++) {
-      rt->right_inorder = vc_[i];
-      rt->left_inorder = nullptr;
+      rt->right = vc_[i];
+      rt->left = nullptr;
       rt = vc_[i];
     }
     return;
